@@ -47,6 +47,7 @@ InputMappingComponent::InputMappingComponent()
 
 void InputMappingComponent::_init(nlohmann::json json)
 {
+    std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<std::endl;
     int valid = 0;
     std::cout<<"initing the packagedComponents"<<std::endl;
 
@@ -59,7 +60,8 @@ void InputMappingComponent::_init(nlohmann::json json)
             for(auto col = row.begin(); col != row.end(); ++col){
                 InputAction action;
                 action << col.key();
-                Init::initVector(json, col.key(), this->mapping[action]);
+                std::cout<<action<<"HAHA"<<col.key()<<std::endl;
+                Init::initVector(row, col.key(), this->mapping[action]);
             }
         }
         valid++;
@@ -69,7 +71,14 @@ void InputMappingComponent::_init(nlohmann::json json)
     }
     if(valid != 1)
         throw new std::runtime_error("NOT ALL REQUIRED PARAMETERS WERE INITIALISED!");
-
+    for(auto row : this->mapping){
+        std::cout<<row.first << ": {";
+        for(auto part : row.second){
+            std::cout<<part<<",";
+        }
+        std::cout<<"};"<<std::endl;
+    }
+    std::cout<<"!!!!!!!!!!!!!!!!!!!!!!!"<<std::endl;
 }
 
 void InputMappingComponent::_deinit()

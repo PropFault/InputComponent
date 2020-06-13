@@ -13,7 +13,7 @@ public:
         ecm.registerBlueprint(new InputMappingComponent());
     }
     void onRegisterSystems(SystemPipeline &pipeline, const Context &context){
-        pipeline.add(new InputSystem(context.event, context.getFuncMan()));
+        pipeline.add(new InputSystem(context.event, context.getFuncMan(), context.getEcm()));
     }
 };
 extern "C" BOOST_SYMBOL_EXPORT InputComponentPlugin plugin;

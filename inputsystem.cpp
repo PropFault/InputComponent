@@ -4,8 +4,8 @@
 #include "inputevent.h"
 
 
-InputSystem::InputSystem(SDL_Event &event, FunctionManager &funcMan)
-    :System("InputMapping"),event(event), funcMan(funcMan)
+InputSystem::InputSystem(SDL_Event &event, FunctionManager &funcMan, EntityComponentManager &ecm)
+    :System("InputMapping"),event(event), funcMan(funcMan), ecm(ecm)
 {}
 
 void InputSystem::think(EntityComponentManager &ecs, const std::unordered_set<Component::CID> &typedComponents, System::DataPack &dataPack)
@@ -37,25 +37,30 @@ void InputSystem::think(EntityComponentManager &ecs, const std::unordered_set<Co
             Controller& controller = *controllers.at(inputMapping->getControllerNum());
 
             std::cout<<"2"<<std::endl;
-            for(auto it = inputMapping->getMapping().begin(); it != inputMapping->getMapping().end(); ++it){
+            for(auto it : inputMapping->getMapping()){
 
                 std::cout<<"3"<<std::endl;
-                if(states.find(it->first)==states.end()){
+                if(states.find(it.first)==states.end()){
 
                     std::cout<<"4"<<std::endl;
-                    states.insert(std::pair(it->first, std::pair(controller.getAxis(it->first), controller.getButton(it->first))));
+                    states.insert(std::pair(it.first, std::pair(controller.getAxis(it.first), controller.getButton(it.first))));
 
                     std::cout<<"5"<<std::endl;
                 }
 
                 std::cout<<"6"<<std::endl;
-                const auto& state = states.at(it->first);
+                const auto& state = states.at(it.first);
 
                 std::cout<<"7"<<std::endl;
-                for(const auto& funcName : it->second){
+                for(const auto& funcName : it.second){
 
                     std::cout<<"8"<<std::endl;
-                    funcMan.call(funcName, InputEvent(it->first, state.second,state.first),cid);
+                    std::vector<Component*> packaged;
+                    for(auto cid : inputMapping->getPackagedComponents()){
+                        packaged.push_back(this->ecm.lookupCID<Component>(cid));
+                    }
+
+                    funcMan.call(funcName, InputEvent(it.first, state.second,state.first, packaged),cid);
 
                     std::cout<<"9"<<std::endl;
                 }

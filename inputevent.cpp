@@ -30,8 +30,18 @@ void InputEvent::setAction(const InputAction &value)
     action = value;
 }
 
-InputEvent::InputEvent(InputAction action, bool buttonValue, float axisValue)
-    :action(action), buttonValue(buttonValue), axisValue(axisValue)
+std::vector<Component *> InputEvent::getPackagedComponents() const
+{
+    return packagedComponents;
+}
+
+void InputEvent::setPackagedComponents(const std::vector<Component *> &value)
+{
+    packagedComponents = value;
+}
+
+InputEvent::InputEvent(InputAction action, bool buttonValue, float axisValue, const std::vector<Component*> components)
+    :action(action), buttonValue(buttonValue), axisValue(axisValue),packagedComponents(components)
 {
 
 }

@@ -58,12 +58,16 @@ float SDLController::getAxis(InputAction action) const
     std::cout<<"GETTING AXIS FOR " << action <<std::endl;
     switch(action){
     case STICK_L_X:
+        std::cout<<"STICK_L_X"<<std::endl;
         return SDL_GameControllerGetAxis(this->controller, SDL_CONTROLLER_AXIS_LEFTX);
     case STICK_L_Y:
+        std::cout<<"STICK_L_Y"<<std::endl;
         return SDL_GameControllerGetAxis(this->controller, SDL_CONTROLLER_AXIS_LEFTY);
     case STICK_R_X:
+        std::cout<<"STICK_R_X"<<std::endl;
         return SDL_GameControllerGetAxis(this->controller, SDL_CONTROLLER_AXIS_RIGHTX);
     case STICK_R_Y:
+        std::cout<<"STICK_R_Y"<<std::endl;
         return SDL_GameControllerGetAxis(this->controller, SDL_CONTROLLER_AXIS_RIGHTY);
     case DPAD_U:
         return SDL_GameControllerGetButton(this->controller, SDL_CONTROLLER_BUTTON_DPAD_UP);

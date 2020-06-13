@@ -12,8 +12,9 @@ private:
     SDL_Event& event;
     std::vector<std::shared_ptr<Controller>>controllers;
     FunctionManager &funcMan;
+    EntityComponentManager &ecm;
 public:
-    InputSystem(SDL_Event& event, FunctionManager &funcMan);
+    InputSystem(SDL_Event& event, FunctionManager &funcMan, EntityComponentManager &ecm);
 
     // System interface
 public:
